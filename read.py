@@ -28,18 +28,20 @@ with open('distancesG.csv') as csvfile:
             matriceDistances[i,j] = listedist[nbNoeud*i+j]
             
 
-def cout(b,c,matriceDistances):
+def cout(b,matriceDistances):
     cout_boucle = 0
     cout_chaine = 0
     for boucle in b:
-        for i in range(len(boucle)-1):
-            cout_boucle += matriceDistances[boucle[i],boucle[i+1]]
-        cout_boucle += matriceDistances[boucle[len(boucle)-1],boucle[0]]
-    for chaine in c:
-        for j in range(len(chaine)-1):
-            cout_chaine += matriceDistances[chaine[j],chaine[j+1]]
+        for sous_boucle in boucle:
+            if (len(sous_boucle) > 1):
+                for i in range(len(sous_boucle)-1):
+                    cout_chaine += matriceDistances[sous_boucle[i],sous_boucle[i+1]]
+        for j in range(len(boucle)-1):
+            cout_boucle += matriceDistances[boucle[j][0],boucle[j+1][0]]
+        cout_boucle += matriceDistances[boucle[len(boucle)-1][0],boucle[0][0]]
+
     cout_reseau = cout_boucle + cout_chaine
-    return cout_reseau            
+    return cout_reseau           
 
 
 Distributions = []
