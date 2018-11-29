@@ -3,17 +3,20 @@ import numpy as np
 
 # parser node
 
-with open('nodesG.csv') as csvfile:
+listeCoord = []
+
+with open('instances/nodesN.csv') as csvfile:
     readcsv = csv.reader(csvfile, delimiter=';')
     lineCount = -1
-    listeCoord = []
+
     for row in readcsv:
         lineCount = lineCount + 1
         if(lineCount >= 1):
-            listeCoord.append(row)
+            listeCoord.append((float(row[0]), float(row[1]), row[2]))
+
+
 
 #parser distance
-
 with open('distancesG.csv') as csvfile:
     readcsv = csv.reader(csvfile, delimiter=';')
     matriceDistances = np.zeros((lineCount,lineCount))
