@@ -51,4 +51,28 @@ for i in range(nbNoeud):
         Distributions.append([listeCoord[i][0], listeCoord[i][1]])
     else:
         Antennes.append([listeCoord[i][0], listeCoord[i][1]])
-
+        
+def recuitSimule(solution,matrice):
+    solAncien = solution
+    for temperature in numpy.logspace(0,5,num=100000)[::-1]:
+        indAlea=random.randInt(len(solAncien))
+        bRandom = solAncien[indAlea]
+        indRandom = random.randInt(len(bRandom))
+        if(len(bRandom) == 30):
+            bRandom[indRandom] = bRandom[indRandom] + bRandom[(indRandom+1)%len(b)]
+            bRandom.remove(bRandom[(indRandom+1)%len(b)])
+        else:
+            if(random.random() > 1/2):
+                bRandom[indRandom] = bRandom[indRandom] + bRandom[(indRandom+1)%len(b)]
+                bRandom.remove(bRandom[(indRandom+1)%len(b)])
+            else:
+                for j in range(len(bRandom)):
+                    if(len(bRandom[j]) >= 2):
+                        bRandom.insert(indRandom,[bRandom[j][0]])
+                        bRandom.remove(bRandom[indRandom+1])
+                        break
+        solNew = solAncien
+        solNew.insert(indAlea, bRandom)
+        solNew.remove(solNew[indAlea+1])
+        if math.exp(cout(solAncien, matrice)-cout(solNew, matrice) / temperature) > random.random():
+            solAncien = copy.copy(solNew)
