@@ -7,11 +7,11 @@ listeCoord = []
 
 with open('instances/nodesN.csv') as csvfile:
     readcsv = csv.reader(csvfile, delimiter=';')
-    lineCount = -1
+    nbNoeud = -1
 
     for row in readcsv:
-        lineCount = lineCount + 1
-        if(lineCount >= 1):
+        nbNoeud = nbNoeud + 1
+        if(nbNoeud >= 1):
             listeCoord.append((float(row[0]), float(row[1]), row[2]))
 
 
@@ -19,13 +19,13 @@ with open('instances/nodesN.csv') as csvfile:
 #parser distance
 with open('distancesG.csv') as csvfile:
     readcsv = csv.reader(csvfile, delimiter=';')
-    matriceDistances = np.zeros((lineCount,lineCount))
+    matriceDistances = np.zeros((nbNoeud,nbNoeud))
     listedist = []
     for row in readcsv:
         listedist.append(row[0])
-    for i in range(lineCount):
-        for j in range(lineCount):
-            matriceDistances[i,j] = listedist[lineCount*i+j]
+    for i in range(nbNoeud):
+        for j in range(nbNoeud):
+            matriceDistances[i,j] = listedist[nbNoeud*i+j]
             
 
 def cout(b,c,matriceDistances):
@@ -40,3 +40,13 @@ def cout(b,c,matriceDistances):
             cout_chaine += matriceDistances[chaine[j],chaine[j+1]]
     cout_reseau = cout_boucle + cout_chaine
     return cout_reseau            
+
+
+Distributions = []
+Antennes = []
+for i in range(nbNoeud):
+    if(listeCoord[i][2] == "distribution"):
+        Distributions.append([listeCoord[i][0], listeCoord[i][1]])
+    else:
+        Antennes.append([listeCoord[i][0], listeCoord[i][1]])
+
