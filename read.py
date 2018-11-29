@@ -20,7 +20,7 @@ with open('distancesG.csv') as csvfile:
     listedist = []
     for row in readcsv:
         listedist.append(row[0])
-    print(listedist)
     for i in range(lineCount):
         for j in range(lineCount):
-            matriceDistances[i,j] = listedist[1+lineCount*i+j]
+            matriceDistances[i,j] = listedist[lineCount*i+j]
+    
